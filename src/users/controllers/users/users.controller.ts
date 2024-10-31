@@ -1,14 +1,21 @@
-import { Body, Controller, Get, Param, Post, Query, Req, Res } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, Req, Res, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
+import { AuthGuard } from 'src/users/guards/auth/auth.guard';
+import { ValidateCreateUserPipe } from 'src/users/pipes/validate-create-user/validate-create-user.pipe';
+import { UsersService } from 'src/users/services/users/users.service';
 
 @Controller('users')
+@UseGuards(AuthGuard)
 export class UsersController {
+
+  constructor (private usersService: UsersService){
+
+  }
+
   @Get()
   getUsers() {
-    return {
-      userName: 'Zulkefal',
-    };
+   const res = this.usersService.fetchUsers();
+   return res;
   }
 
   @Get('posts')
@@ -51,8 +58,9 @@ export class UsersController {
   //   res.send("User created successfully");
   // }
 
-  @Post('')
-  createUser(@Body() userData: CreateUserDto) {
+  @Post('/createUser')
+  @UsePipes(new ValidationPipe())
+  createUser(@Body(ValidateCreateUserPipe) userData: CreateUserDto) {
     console.log('User Data:', userData);
     return userData;
   }
@@ -68,5 +76,10 @@ export class UsersController {
   @Get('sort')
   searchUser(@Query('sortBy') sortBy) {
     console.log(sortBy)
+  }
+
+  @Put(":id")
+  updateUserId(@Param('id',ParseIntPipe) id: number) {
+    
   }
 }
