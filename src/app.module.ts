@@ -15,6 +15,6 @@ import { Post } from './typeorm/entities/Post.entity';
     password: 'admin',
     database:'nestJs_Sql_tutorial',
     entities: [User,Profile,Post],
-    synchronize: true,
+    synchronize: false,
   }),UsersModule]})
 export class AppModule {}
