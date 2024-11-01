@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -15,6 +16,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
 import { UpdateUserDto } from 'src/users/dtos/UpdateUser.dto';
+import { UserProfileDto } from 'src/users/dtos/UserProfile.dto';
 import { AuthGuard } from 'src/users/guards/auth/auth.guard';
 import { ValidateCreateUserPipe } from 'src/users/pipes/validate-create-user/validate-create-user.pipe';
 import { UsersService } from 'src/users/services/users/users.service';
@@ -26,7 +28,6 @@ export class UsersController {
 
   @Get()
   getUsers() {
-
     return this.usersService.fetchUsers();
   }
 
@@ -39,7 +40,21 @@ export class UsersController {
   @Put(':id')
   updateUserId(@Param('id', ParseIntPipe) id: number, @Body() updareUserDto:UpdateUserDto) {
     return this.usersService.updateUser(id,updareUserDto);
-    
+  }
+
+  @Delete(':id')
+  deleteUserById(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.deleteUser(id);
+  }
+
+  @Post('login')
+  login(@Body() createUser:CreateUserDto){
+    return this.usersService.login(createUser);
+  }
+
+  @Post(":id/profiles")
+  createUserProfile(@Param('id',ParseIntPipe) id:number,@Body() userProfileDto:UserProfileDto){
+    return this.usersService.createUserProfile(id,userProfileDto);
   }
   // @Get()
   // getUsers() {
