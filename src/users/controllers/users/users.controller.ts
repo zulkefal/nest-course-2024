@@ -14,6 +14,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
+import { UpdateUserDto } from 'src/users/dtos/UpdateUser.dto';
 import { AuthGuard } from 'src/users/guards/auth/auth.guard';
 import { ValidateCreateUserPipe } from 'src/users/pipes/validate-create-user/validate-create-user.pipe';
 import { UsersService } from 'src/users/services/users/users.service';
@@ -35,6 +36,11 @@ export class UsersController {
  
   }
 
+  @Put(':id')
+  updateUserId(@Param('id', ParseIntPipe) id: number, @Body() updareUserDto:UpdateUserDto) {
+    return this.usersService.updateUser(id,updareUserDto);
+    
+  }
   // @Get()
   // getUsers() {
   //   const res = this.usersService.fetchUsers();
