@@ -13,7 +13,7 @@ export class Post{
     @Column()
     description:string
 
-    @ManyToOne(()=>User,(user)=>user.posts)
+    @ManyToOne(()=>User, (user)=>(user.posts))
     user:User
 
 }

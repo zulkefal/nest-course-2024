@@ -118,6 +118,13 @@ export class UsersService {
     return await this.postRepository.save(newPost);
 
   }
+
+  async user_with_posts(id: number) {
+    return await this.userRepository.findOne({
+      where: { id: id },
+      relations: ['posts'],
+    });
+  } 
   // fetchUsers() {
   //     return {users: [
   //         {

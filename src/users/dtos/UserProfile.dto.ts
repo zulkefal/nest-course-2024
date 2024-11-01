@@ -7,7 +7,6 @@ export class UserProfileDto {
     @IsNotEmpty()
     @IsString()
     lastName: string;
-    @IsNotEmpty()
     @IsString()
     @IsNotEmpty()
     age: number;

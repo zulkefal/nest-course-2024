@@ -33,9 +33,9 @@ export class UsersController {
   }
 
   @Post('createUser')
+  @UsePipes(new ValidationPipe())
   createUser(@Body() createUserDto:CreateUserDto){
     return this.usersService.createUser(createUserDto);
- 
   }
 
   @Put(':id')
@@ -67,6 +67,11 @@ export class UsersController {
   createUserPost(@Param('id',ParseIntPipe) id:number,@Body() createUserPost:CreateUserPostDto){
     return this.usersService.createUserPost(id,createUserPost);
 
+  }
+
+  @Get(":id/userWithPosts")
+  userWithPosts(@Param('id',ParseIntPipe) id:number){
+    return this.usersService.user_with_posts(id);
   }
   // @Get()
   // getUsers() {

@@ -24,7 +24,7 @@ export class User{
     profile:Profile
 
 
-    @OneToMany(()=>Post,(post)=>post.user)
+    @OneToMany(()=>Post, (post)=>(post.user))
     posts:Post[]
 
     
