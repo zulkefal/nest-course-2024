@@ -15,6 +15,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
+import { CreateUserPostDto } from 'src/users/dtos/CreateUserPost.dto';
 import { UpdateUserDto } from 'src/users/dtos/UpdateUser.dto';
 import { UserProfileDto } from 'src/users/dtos/UserProfile.dto';
 import { AuthGuard } from 'src/users/guards/auth/auth.guard';
@@ -52,9 +53,20 @@ export class UsersController {
     return this.usersService.login(createUser);
   }
 
+  @Get('relations')
+  getRelations(){
+    return this.usersService.getRelations();
+  }
+
   @Post(":id/profiles")
   createUserProfile(@Param('id',ParseIntPipe) id:number,@Body() userProfileDto:UserProfileDto){
     return this.usersService.createUserProfile(id,userProfileDto);
+  }
+
+  @Post(":id/posts")
+  createUserPost(@Param('id',ParseIntPipe) id:number,@Body() createUserPost:CreateUserPostDto){
+    return this.usersService.createUserPost(id,createUserPost);
+
   }
   // @Get()
   // getUsers() {

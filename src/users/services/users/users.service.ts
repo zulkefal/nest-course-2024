@@ -7,13 +7,18 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { UserProfileDto } from 'src/users/dtos/UserProfile.dto';
 import { Profile } from 'src/typeorm/entities/Profile.entity';
+import { CreateUserPostDto } from 'src/users/dtos/CreateUserPost.dto';
+import { Post } from 'src/typeorm/entities/Post.entity';
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     @InjectRepository(Profile)
-    private readonly profileRepository: Repository<Profile>
+    private readonly profileRepository: Repository<Profile>,
+    @InjectRepository(Post)
+    private readonly postRepository: Repository<Post>
+
 
   ) {}
 
@@ -94,6 +99,25 @@ export class UsersService {
     return { message: 'Profile created successfully' };
   }
   
+  async getRelations()
+  {
+    return await this.userRepository.find({
+        relations: ['profile']
+    })
+  }
+
+  async createUserPost(id:number,createUserPost:CreateUserPostDto)
+  {
+    const user = await this.userRepository.findOneBy({id});
+    if(!user)
+    {
+        return {message: 'User not found'};
+    }
+
+    const newPost = this.postRepository.create({...createUserPost,user});
+    return await this.postRepository.save(newPost);
+
+  }
   // fetchUsers() {
   //     return {users: [
   //         {
