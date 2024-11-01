@@ -3,6 +3,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './typeorm/entities/User.entity';
 import { Profile } from './typeorm/entities/Profile.entity';
+import { Post } from './typeorm/entities/Post.entity';
 
 
 @Module({
@@ -13,7 +14,7 @@ import { Profile } from './typeorm/entities/Profile.entity';
     username: 'root',
     password: 'admin',
     database:'nestJs_Sql_tutorial',
-    entities: [User,Profile],
-    synchronize: false,
+    entities: [User,Profile,Post],
+    synchronize: true,
   }),UsersModule]})
 export class AppModule {}

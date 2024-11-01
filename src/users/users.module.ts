@@ -6,9 +6,10 @@ import { AnotherUserMiddleware } from './middlewares/another-user/another-user.m
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/typeorm/entities/User.entity';
 import { Profile } from 'src/typeorm/entities/Profile.entity';
+import { Post } from 'src/typeorm/entities/Post.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User,Profile])],
+  imports: [TypeOrmModule.forFeature([User,Profile,Post])],
   controllers: [UsersController],
   providers: [UsersService]
 })
